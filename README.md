@@ -8,6 +8,7 @@ Update the NUM_LIGHTS (lights.js:11) constant to match the number of LIFX bulbs 
 The script only takes one argument: `on` or `off`
   * `node lights.js on`
   * `node lights.js off`
+  
 If the script fails to discover the specified number of bulbs within the allotted time (`DISCOVER_TIMEOUT`, default of 1s), it will toggle the bulbs that it *did* discover.
 
 Debug
