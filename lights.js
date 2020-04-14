@@ -42,12 +42,10 @@ const setState = action => {
     Promise.all(promises).then(() => process.exit(0))
 }
 
-const setTimeoutAction = () => {
-    return setTimeout(() => {
-            debug('Timeout expired, continuing')
-            setState(action)
-    }, DISCOVER_TIMEOUT)
-}
+const setTimeoutToggle = () => setTimeout(() => {
+    debug('Timeout expired, continuing')
+    setState(action)
+}, DISCOVER_TIMEOUT)
 
 // Main event listeners
 client.on(NEW_LIGHT, light => {
@@ -55,17 +53,17 @@ client.on(NEW_LIGHT, light => {
     lightList.addLight(light)
     if (existingTimeout) {
         clearTimeout(existingTimeout)
-        existingTimeout = setTimeoutAction()
+        existingTimeout = setTimeoutToggle()
     } else {
         debug('Setting timeout...')
-        existingTimeout = setTimeoutAction()
+        existingTimeout = setTimeoutToggle()
     }
 })
 
 lightList.on(LIGHTS_READY, () => {
     debug('All lights found!')
     if (action != 'on' && action != 'off') {
-        debug(`'${action}' is not a valid argument`)
+        console.log(`'${action}' is not a valid argument`)
         process.exit(1)
     } else {
         setState(action)
